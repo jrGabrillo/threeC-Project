@@ -187,19 +187,37 @@ var getIPHost = function(ip){
 	return parseInt(ip[3]);
 }
 
-var ip = "100.0.0.0";
-var host = getIPHost(ip);
-var n = 1;
-var s = binary(n); // 2^n
-var h = binary(8-n); // 2^n-8
-var x = 0;
-var NA = 0; 
-var Fh = 0;
-var Lh = 0;
-var BA = 0;
+var getIP = function(ip){
+	ip = ip.split('.');
+	return ip;
+}
 
+var ipAddressing = function(ipaddress){
+	var host = getIPHost(ipaddress);
+	var n = 1;
+	var s = binary(n); // 2^n
+	var h = binary(8-n); // 2^n-8
 
-console.log(host);
+	var ip = getIP(ipaddress)[0]+'.'+getIP(ipaddress)[1]+'.'+getIP(ipaddress)[2];
+
+	var x = 0, NA = 0, Fh = 0, Lh = 0, BA = 0;
+	
+	for(loop=1;loop<=s;loop++){
+		NA = x;
+		Fh = NA+1;
+		Lh = (NA+h)-2;
+		BA = Lh+1;
+		x=x+h;
+		console.log("NA: "+ip+'.'+NA);
+		console.log("Fh: "+ip+'.'+Fh);
+		console.log("Lh: "+ip+'.'+Lh);
+		console.log("BA: "+ip+'.'+BA);
+		console.log(" ");
+	}
+}
+
+var ip = "192.168.1.0";
+ipAddressing(ip);
 
 /*
 	1. set ip
