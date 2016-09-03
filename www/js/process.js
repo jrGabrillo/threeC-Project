@@ -169,9 +169,10 @@ $(".content-block p").html(content);
 // 	console.log(obj.e);
 // });
 
+//3
 var binary = function(n){
 	if((n<=0)||(n>=8)){
-		return "subnets cannot be greater or equal to 8.";
+		return "subnets cannot be lesser or equal to zero or greater or equal to 8.";
 	}
 	else{
 		var result = 1;
@@ -192,33 +193,40 @@ var getIP = function(ip){
 	return ip;
 }
 
-var ipAddressing = function(ipaddress){
-	var host = getIPHost(ipaddress);
-	var n = 1;
-	var s = binary(n); // 2^n
-	var h = binary(8-n); // 2^n-8
+var ipAddressing = function(ip,n){
+	var host = getIPHost(ip);
+	var s = binary(n);
+	var h = binary(8-n);
+	var ip = getIP(ip);
 
-	var ip = getIP(ipaddress)[0]+'.'+getIP(ipaddress)[1]+'.'+getIP(ipaddress)[2];
+	var NA = 0; // host+a;
+	var Fh = 0; // host+1;
+	var Lh = 0; // (NA+h)-2;
+	var BA = 0; // Lh+1;
+	var a = 0; // a+h;
 
-	var x = 0, NA = 0, Fh = 0, Lh = 0, BA = 0;
-	
-	for(loop=1;loop<=s;loop++){
-		NA = x;
-		Fh = NA+1;
-		Lh = (NA+h)-2;
-		BA = Lh+1;
-		x=x+h;
-		console.log("NA: "+ip+'.'+NA);
-		console.log("Fh: "+ip+'.'+Fh);
-		console.log("Lh: "+ip+'.'+Lh);
-		console.log("BA: "+ip+'.'+BA);
-		console.log(" ");
+	console.log(s);
+	console.log(h); 
+	console.log(host);
+
+	for(x=1;x<=s;x++){
+		NA = host+a;
+		Fh = NA + 1;
+		Lh = (NA + h) - 2;
+		BA = Lh + 1;
+		a = a + h;
+
+		console.log(ip[0]+"."+ip[1]+"."+ip[2]+"."+NA);
+		console.log(ip[0]+"."+ip[1]+"."+ip[2]+"."+Fh);
+		console.log(ip[0]+"."+ip[1]+"."+ip[2]+"."+Lh);
+		console.log(ip[0]+"."+ip[1]+"."+ip[2]+"."+BA);
+		console.log("");
 	}
 }
 
 var ip = "192.168.1.0";
-ipAddressing(ip);
-
+var n = 2;
+var ipOutput = ipAddressing(ip,n);
 /*
 	1. set ip
 	2. identify host
